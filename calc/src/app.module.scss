@@ -1,0 +1,210 @@
+// Calculator SCSS with background customization
+
+// Variables
+$calculator-width: 320px;
+$calculator-bg: rgba(30, 30, 30, 0.95);
+$display-bg: black;
+$button-hover-opacity: 0.85;
+$border-radius: 10px;
+$button-radius: 5px;
+$padding: 20px;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+// Main styles
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  @include flex-center;
+  transition: background-color 0.3s ease;
+}
+
+.calculator-wrapper {
+  @include flex-column-center;
+  gap: 20px;
+  width: 100%;
+}
+
+.calculator {
+  width: $calculator-width;
+  padding: $padding;
+  background-color: $calculator-bg;
+  border-radius: $border-radius;
+  color: white;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  
+  .display {
+    background-color: $display-bg;
+    padding: 15px;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    border-radius: $button-radius;
+    text-align: right;
+    min-height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    
+    .previous-operand {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      min-height: 20px;
+    }
+    
+    .current-operand {
+      font-size: 2rem;
+      word-break: break-all;
+    }
+  }
+  
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    
+    button {
+      padding: 15px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: $button-radius;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        opacity: $button-hover-opacity;
+        transform: translateY(-1px);
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+      
+      // Button types
+      &.number {
+        background-color: #505050;
+        color: white;
+      }
+      
+      &.operator {
+        background-color: #FF9500;
+        color: white;
+      }
+      
+      &.equals {
+        background-color: #FF9500;
+        color: white;
+      }
+      
+      &.clear {
+        background-color: #a6a6a6;
+        color: black;
+      }
+      
+      &.delete {
+        background-color: #a6a6a6;
+        color: black;
+      }
+      
+      &.span-two {
+        grid-column: span 2;
+      }
+    }
+  }
+}
+
+.background-selector {
+  width: $calculator-width;
+  padding: $padding;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: $border-radius;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  
+  h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+  }
+  
+  .color-options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    
+    .color-option {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      
+      &:hover {
+        transform: scale(1.1);
+      }
+      
+      &.active {
+        border-color: #333;
+        transform: scale(1.1);
+      }
+      
+      // Color options
+      &.color-blue {
+        background-color: #1e3a8a;
+      }
+      
+      &.color-teal {
+        background-color: #0f766e;
+      }
+      
+      &.color-brown {
+        background-color: #7c2d12;
+      }
+      
+      &.color-purple {
+        background-color: #581c87;
+      }
+      
+      &.color-dark {
+        background-color: #1e293b;
+      }
+      
+      &.color-default {
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 400px) {
+  .calculator {
+    width: 95%;
+    padding: 15px;
+    
+    .buttons button {
+      padding: 12px;
+      font-size: 1.1rem;
+    }
+  }
+  
+  .background-selector {
+    width: 95%;
+  }
+}
