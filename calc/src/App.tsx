@@ -1,7 +1,6 @@
 import { useReducer } from "react";
 import styles from "./app.module.scss";
 
-/* TYPES */
 
 type Operator = "+" | "-" | "*" | "/";
 
@@ -9,7 +8,7 @@ interface CalculatorState {
   currentValue: string;
   previousValue: number | null;
   operator: Operator | null;
-  expression: string; // Added to track the full expression
+  expression: string;
 }
 
 type CalculatorAction =
@@ -18,16 +17,16 @@ type CalculatorAction =
   | { type: "CALCULATE" }
   | { type: "CLEAR" };
 
-/* STATE */
+
 
 const initialState: CalculatorState = {
   currentValue: "",
   previousValue: null,
   operator: null,
-  expression: "", // Initialize expression
+  expression: "",
 };
 
-/* REDUCER  */
+
 
 function calculatorReducer(
   state: CalculatorState,
@@ -39,7 +38,6 @@ function calculatorReducer(
       return {
         ...state,
         currentValue: newValue,
-        // Update expression to show the calculation so far
         expression: state.previousValue !== null && state.operator !== null 
           ? `${state.previousValue} ${state.operator} ${newValue}`
           : newValue,
@@ -47,7 +45,6 @@ function calculatorReducer(
 
     case "SET_OPERATOR":
       if (state.currentValue === "") {
-        // Don't set operator if no current value
         return state;
       }
       
@@ -55,7 +52,6 @@ function calculatorReducer(
         previousValue: Number(state.currentValue),
         currentValue: "",
         operator: action.payload,
-        // Show "5 + " in the expression
         expression: `${Number(state.currentValue)} ${action.payload}`,
       };
 
@@ -84,7 +80,7 @@ function calculatorReducer(
           return state;
       }
 
-      const fullExpression = `${state.previousValue} ${state.operator} ${current} =`;
+      const fullExpression = `${state.previousValue} ${state.operator} ${current} = ${result}`;
       
       return {
         currentValue: String(result),
@@ -107,7 +103,7 @@ function calculatorReducer(
 export default function App() {
   const [state, dispatch] = useReducer(calculatorReducer, initialState);
 
-  // Determine what to display
+  // Always show the expression if it exists, otherwise show current value
   const displayValue = state.expression || state.currentValue || "0";
 
   return (
